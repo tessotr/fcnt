@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,13 +39,31 @@ namespace fcnt
             }
 
             Dictionary<string, int> fileCount = new Dictionary<string, int>();
+            string findExtensions = "";
 
+            int i = 0;
             foreach (var extension in args)
             {
                 fileCount[extension] = 0;
+                if(i != 0)
+                {
+                    findExtensions += " ";
+                }
+                findExtensions += $"*{extension}";
+                i++;
             }
 
-            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.*", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.*", SearchOption.AllDirectories).Where(file =>
+            {
+                foreach (var ext in args)
+                {
+                    if (file.ToLower().EndsWith(ext))
+                        return true;
+                }
+
+                return false;
+            }).ToArray();
+
             foreach (var fPath in files)
             {
                 foreach(var extension in args)
