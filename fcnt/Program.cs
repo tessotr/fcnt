@@ -39,19 +39,6 @@ namespace fcnt
             }
 
             Dictionary<string, int> fileCount = new Dictionary<string, int>();
-            string findExtensions = "";
-
-            int i = 0;
-            foreach (var extension in args)
-            {
-                fileCount[extension] = 0;
-                if(i != 0)
-                {
-                    findExtensions += " ";
-                }
-                findExtensions += $"*{extension}";
-                i++;
-            }
 
             string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.*", SearchOption.AllDirectories).Where(file =>
             {
